@@ -42,16 +42,16 @@ class Post(models.Model):
         ordering = ['created_on']
 
     def __str__(self):
-        return f"{self.name} on {self.created_on}"
+        return f"{self.name} in section {self.thread} on {self.created_on} "
 
 
 class Section(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
-    threads = models.ForeignKey(Thread, on_delete=models.CASCADE)
+    threads = models.ManyToManyField(Thread, related_name='threads', blank=False)
 
     class Meta:
         ordering = ['title']
 
     def __str__(self):
-        return f"Section: {self.title}"
+        return f"Section: {self.title} contains {self.threads}"
