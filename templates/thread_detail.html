@@ -1,5 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 
+{% load crispy_forms_tags %}
+
 <div class="masthead">
     <div class="container">
         <div class="row g-0">
@@ -58,7 +60,7 @@
                 <div class="comments" style="padding: 10px;">
                     <p class="font-weight-bold">
                         <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
-                        {{ post.author }}
+                        {{ post.name }}
                         <span class=" text-muted font-weight-normal">
                             <!-- The comment's created date goes here -->
                             {{ post.created_on }}
@@ -74,6 +76,18 @@
         <div class="col-md-4 card mb-4  mt-3 ">
             <div class="card-body">
                 <!-- For later -->
+
+                {% if user.is_authenticated %}
+
+                <h3>reply:</h3>
+                <p>{{ user.username }}</p>
+                <form method="post" style="margin-top: 1.3em">
+                {{ post_form | crispy }}
+                {% csrf_token %}
+                <button type="submit">submit</button>
+                </form>
+                {% endif %}
+
             </div>
         </div>
     </div>
