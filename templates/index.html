@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    {% for thread in thread_list %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Author: {{ thread.author }}</p>
+                    <a href="{% url 'thread_detail' thread.slug %}" class="post-link">
+                        <h2>{{ thread.title }}</h2>
+                        <p>{{ thread.excerpt }}</p>
+                        <p>{{ thread.created_on}} <i class="fa-solid fa-thumbs-up"></i>
+                            {{ thread.number_of_upvotes }} | <i class="fa-solid fa-thumbs-down"></i>
+                            {{ thread.number_of_downvotes }}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+</div>
+</div>
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+</div>
+{%endblock%}

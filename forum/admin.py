@@ -18,9 +18,9 @@ class PostAdmin(SummernoteModelAdmin):
     summernote_fields = ('body')
     list_filter = ('thread', 'created_on')
     list_display = ('thread', 'name', 'body')
-    actions = ['disable_comments']
+    actions = ['disable_post']
     
-    def disable_comments(self, request, queryset):
+    def disable_post(self, request, queryset):
         queryset.update(approved=False)
 
 
