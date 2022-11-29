@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
+from django.http import HttpResponseRedirect
 from .models import Thread
 from .forms import PostForm
 
@@ -68,3 +69,29 @@ class ThreadDetail(View):
                 "downvotes": downvotes,
             },
         )
+
+
+class ThreadUpvote(View):
+
+    def post(self, request, slug, *args, **kwargs):
+        thread = get_object_or_404(Thread, slug=slug)
+
+        if thread.upvotes.filter(id=request.user.id).exists():
+            thread.upvotes.remove(request.user)
+        else:
+            thread.upvotes.add(request.user)
+
+        return HttpResponseRedirect(reverse('thread_detail', args=[slug]))
+
+
+class ThreadDownvote(View):
+
+    def post(self, request, slug, *args, **kwargs):
+        thread = get_object_or_404(Thread, slug=slug)
+
+        if thread.downvotes.filter(id=request.user.id).exists():
+            thread.downvotes.remove(request.user)
+        else:
+            thread.downvotes.add(request.user)
+
+        return HttpResponseRedirect(reverse('thread_detail', args=[slug]))

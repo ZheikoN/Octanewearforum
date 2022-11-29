@@ -13,7 +13,7 @@
                 <p class="post-subtitle">{{ thread.author }} | {{ thread.created_on }}</p>
             </div>
             <div class="d-none d-md-block col-md-6 masthead-image">
-             
+
             </div>
         </div>
     </div>
@@ -28,11 +28,45 @@
                 <p class="card-text "> {{ thread.content | safe }}</p>
                 <div class="row">
 
-                    <div class="col-1">
-                        <!-- The number of likes goes before the closing strong tag -->
+                    <div class="col-2">
+                        <strong>
+                            {% if user.is_authenticated %}
+                            <form class="d-inline" action="{% url 'thread_upvote' thread.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if upvotes %}
+                                <button type="submit" name="forumthread_id" value="{{thread.slug}}" class="btn-like">
+                                    <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }}
+                                </button>
+                                {% else %}
+                                <button type="submit" name="forumthread_id" value="{{thread.slug}}" class="btn-like">
+                                    <i class="fa-regular fa-thumbs-up"></i> {{ thread.number_of_upvotes }}
+                                </button>
+                                {% endif %}
+                            </form>
+
+                            <form class="d-inline" action="{% url 'thread_downvote' thread.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if downvotes %}
+                                <button type="submit" name="forumthread_id" value="{{thread.slug}}" class="btn-like">
+                                    <i class="fa-solid fa-thumbs-down"></i> {{ thread.number_of_downvotes }}
+                                </button>
+                                {% else %}
+                                <button type="submit" name="forumthread_id" value="{{thread.slug}}" class="btn-like">
+                                    <i class="fa-regular fa-thumbs-down"></i> {{ thread.number_of_downvotes }}
+                                </button>
+                                {% endif %}
+
+                            </form>
+                        </strong>
+                        {% else %}
+
+                        <p>you need to be logged in to rate this thread</p>
                         <strong class="text-secondary"><i class="fa-solid fa-thumbs-up"></i>
                             {{ thread.number_of_upvotes }} | <i class="fa-solid fa-thumbs-down"></i>
                             {{ thread.number_of_downvotes }}</strong>
+
+                        {% endif %}
+
                     </div>
                     <div class="col-1">
                         {% with post.count as total_posts %}
@@ -82,9 +116,9 @@
                 <h3>reply:</h3>
                 <p>{{ user.username }}</p>
                 <form method="post" style="margin-top: 1.3em">
-                {{ post_form | crispy }}
-                {% csrf_token %}
-                <button type="submit">submit</button>
+                    {{ post_form | crispy }}
+                    {% csrf_token %}
+                    <button type="submit">submit</button>
                 </form>
                 {% endif %}
 
