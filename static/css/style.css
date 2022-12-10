@@ -53,6 +53,30 @@ body {
     text-transform: uppercase;
 }
 
+.thread-author {
+    color: gray;
+    margin: 4px;
+}
+
+.thread-row {
+    width: 100%;
+    border: 1px solid black;
+    margin-bottom: 2px;
+}
+
+.thread-title {
+    font-size: large;
+    font-weight: 900;
+    font-family: lato;
+    margin: 10px 0px 0px 10px;
+}
+
+.thread-rest {
+    font-size: small;
+    font-weight: 100;
+    margin: 5px;
+}
+
 .masthead {
     margin-top: 10px;
     overflow: hidden;

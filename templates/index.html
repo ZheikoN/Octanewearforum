@@ -4,26 +4,21 @@
 
 <div class="container-fluid">
     {% for thread in thread_list %}
-    <div class="row">
-        <div class="col-12">
-            <div class="row">
+            <div class="thread-row">
                 <div class="col-md-12">
-                    <p>Author: {{ thread.author }}</p>
                     <a href="{% url 'thread_detail' thread.slug %}" class="post-link">
-                        <h2>{{ thread.title }}</h2>
-                        <p>{{ thread.excerpt }}</p>
-                        <p>{{ thread.created_on}} <i class="fa-solid fa-thumbs-up"></i>
-                            {{ thread.number_of_upvotes }} | <i class="fa-solid fa-thumbs-down"></i>
-                            {{ thread.number_of_downvotes }}</p>
+                        <p class="thread-title">{{ thread.title }}</p>
+                        <p class="thread-rest">by: {{ thread.author }} {{ thread.created_on}} 
+                        
+                        <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }} | 
+                        <i class="fa-solid fa-thumbs-down"></i>
+                        {{ thread.number_of_downvotes }}
+                        </p>
                     </a>
                 </div>
             </div>
-        </div>
-    </div>
     {% endfor %}
 
-</div>
-</div>
 </div>
 {% if is_paginated %}
 <nav aria-label="Page navigation">
