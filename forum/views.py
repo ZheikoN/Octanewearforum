@@ -3,6 +3,7 @@ from django.views import generic, View
 from django.http import HttpResponseRedirect
 from .models import Thread
 from .forms import PostForm
+from django.contrib import messages
 
 
 class ThreadList(generic.ListView):
@@ -56,8 +57,10 @@ class ThreadDetail(View):
             post = post_form.save(commit=False)
             post.thread = thread
             post.save()
+            messages.success(request, "Your post was successful")
         else:
             post_form = PostForm()
+            messages.error(request, "Posting to the thread failed, contact administrator")
 
         return render(
             request, "thread_detail.html",
@@ -78,8 +81,10 @@ class ThreadUpvote(View):
 
         if thread.upvotes.filter(id=request.user.id).exists():
             thread.upvotes.remove(request.user)
+            messages.warning(request, "Your upvote was removed successfully")
         else:
             thread.upvotes.add(request.user)
+            messages.success(request, "Your have upvoted this thread successfully")
 
         return HttpResponseRedirect(reverse('thread_detail', args=[slug]))
 
@@ -91,7 +96,9 @@ class ThreadDownvote(View):
 
         if thread.downvotes.filter(id=request.user.id).exists():
             thread.downvotes.remove(request.user)
+            messages.success(request, "Your downvote was removed successfully")
         else:
             thread.downvotes.add(request.user)
+            messages.warning(request, "You have downvoted this thread")
 
         return HttpResponseRedirect(reverse('thread_detail', args=[slug]))
