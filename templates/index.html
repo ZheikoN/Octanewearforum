@@ -13,7 +13,13 @@
                         <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }} | 
                         <i class="fa-solid fa-thumbs-down"></i>
                         {{ thread.number_of_downvotes }}
-                        </p> {{ thread.number_of_posts }}
+                        </p>                       
+                        {% with posts.count as total_posts %}
+                        <strong class="text-secondary"><i class="far fa-comments"></i>
+                            <!-- Our total_comments variable goes before the closing strong tag -->
+                            x {{ total_posts }}
+                        </strong>
+                        {% endwith %}
                     </a>
                 </div>
             </div>

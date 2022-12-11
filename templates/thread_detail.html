@@ -4,10 +4,11 @@
 
 
 <div class="container">
-<div class="col-md-12">
-    <h2>{{ thread.title}} </h2> <i class="fa-solid fa-user"></i> {{thread.author }} <i class="fa-regular fa-clock"></i>
-    {{thread.created_on }}
-</div>
+    <div class="col-md-12">
+        <h2>{{ thread.title}} </h2> <i class="fa-solid fa-user"></i> {{thread.author }} <i
+            class="fa-regular fa-clock"></i>
+        {{thread.created_on }}
+    </div>
 </div>
 
 
@@ -22,8 +23,9 @@
                 <div class="row">
 
                     <div class="col-2">
+                        
+                        {% if user.is_authenticated %}
                         <strong>
-                            {% if user.is_authenticated %}
                             <form class="d-inline" action="{% url 'thread_upvote' thread.slug %}" method="POST">
                                 {% csrf_token %}
                                 {% if upvotes %}
@@ -74,18 +76,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <hr>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-12">
-            <h3>Comments:</h3>
-            <div class="inpost">
+            <div class="col-md-12 inpost">
                 <!-- We want a for loop inside the tags to iterate through each comment in comments -->
-                page number {{ page.number }}
+                page number {{ page_obj.number }}
                 {% for post in page_obj %}
-                <div class="col-md-11 comments">
+                <div class="comments">
                     <p class="font-weight-bold">
                         <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
                         {{ post.name }}
@@ -95,7 +91,7 @@
                         </span> wrote:
                     </p>
                     <!-- The body of the comment goes before the | -->
-                    {{ post.body | linebreaks }}
+                    {{ post.body | safe }}
                 </div>
                 <!-- Our for loop ends here -->
                 {% endfor %}
@@ -103,17 +99,17 @@
             <div class="pagination">
                 <span class="step-links">
                     {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
                     {% endif %}
-            
+
                     <span class="current">
                         Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                     </span>
-            
+
                     {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
                     {% endif %}
                 </span>
             </div>
@@ -137,7 +133,5 @@
         </div>
     </div>
 </div>
-
-
 
 {% endblock content %}

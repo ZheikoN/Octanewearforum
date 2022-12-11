@@ -31,21 +31,35 @@ body {
 
 .card {
     border: none;
-    background-color: gray;
+    background-color: rgb(94, 152, 228);
     border-radius: 4px;
 }
 
 .inpost {
     border: none;
-    background-color: gray;
+    background-color: rgb(94, 152, 228);
     border-radius: 4px;
+    padding: 10px 0 10px 0;
 }
 
 .comments {
-    border: none;
     background-color: white;
     border-radius: 4px;
     align-content: center;
+    margin: 10px;
+}
+
+.step-links {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+.current {
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
 }
 
 .image-container {

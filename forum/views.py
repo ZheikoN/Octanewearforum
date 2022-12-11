@@ -21,6 +21,9 @@ class ThreadDetail(View):
         queryset = Thread.objects.filter(status=1)
         thread = get_object_or_404(queryset, slug=slug)
         posts = thread.posts.filter(approved=True).order_by('created_on')
+        paginator = Paginator(posts, 10)
+        page_number = request.GET.get('page', 999)
+        page_obj = paginator.get_page(page_number)
 
         upvotes = False
         if thread.upvotes.filter(id=self.request.user.id).exists():
@@ -28,12 +31,6 @@ class ThreadDetail(View):
         downvotes = False
         if thread.downvotes.filter(id=self.request.user.id).exists():
             downvotes = True
-
-        posts_list = thread.posts.filter(approved=True).order_by('created_on')
-        paginator = Paginator(posts_list, 10)
-
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
 
         return render(
             request, "thread_detail.html",
@@ -50,12 +47,12 @@ class ThreadDetail(View):
     def post(self, request, slug, *args, **kwargs):
         queryset = Thread.objects.filter(status=1)
         thread = get_object_or_404(queryset, slug=slug)
-        posts = thread.posts.filter(approved=True).order_by('-created_on')
+        posts = thread.posts.filter(approved=True).order_by('created_on')
 
         upvotes = False
         if thread.upvotes.filter(id=self.request.user.id).exists():
             upvotes = True
-            downvotes = False
+        downvotes = False
         if thread.downvotes.filter(id=self.request.user.id).exists():
             downvotes = True
 
@@ -71,10 +68,8 @@ class ThreadDetail(View):
             post_form = PostForm()
             messages.error(request, "Posting to the thread failed, contact administrator")
 
-        posts_list = thread.posts.filter(approved=True).order_by('created_on')
-        paginator = Paginator(posts_list, 10)
-
-        page_number = request.GET.get('page')
+        paginator = Paginator(posts, 10)
+        page_number = request.GET.get('page', 999)
         page_obj = paginator.get_page(page_number)
 
         return render(
