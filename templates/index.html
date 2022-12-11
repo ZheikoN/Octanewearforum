@@ -13,7 +13,7 @@
                         <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }} | 
                         <i class="fa-solid fa-thumbs-down"></i>
                         {{ thread.number_of_downvotes }}
-                        </p>
+                        </p> {{ thread.number_of_posts }}
                     </a>
                 </div>
             </div>
@@ -33,5 +33,4 @@
     </ul>
 </nav>
 {% endif %}
-</div>
 {%endblock%}

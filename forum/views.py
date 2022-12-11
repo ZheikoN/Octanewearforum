@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from .models import Thread
+from .models import Post
 from .forms import PostForm
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
 class ThreadList(generic.ListView):
@@ -18,7 +20,7 @@ class ThreadDetail(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = Thread.objects.filter(status=1)
         thread = get_object_or_404(queryset, slug=slug)
-        posts = thread.posts.filter(approved=True).order_by('-created_on')
+        posts = thread.posts.filter(approved=True).order_by('created_on')
 
         upvotes = False
         if thread.upvotes.filter(id=self.request.user.id).exists():
@@ -27,6 +29,12 @@ class ThreadDetail(View):
         if thread.downvotes.filter(id=self.request.user.id).exists():
             downvotes = True
 
+        posts_list = thread.posts.filter(approved=True).order_by('created_on')
+        paginator = Paginator(posts_list, 10)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         return render(
             request, "thread_detail.html",
             {
@@ -34,7 +42,8 @@ class ThreadDetail(View):
                 "posts": posts,
                 "upvotes": upvotes,
                 "downvotes": downvotes,
-                "post_form": PostForm()
+                "post_form": PostForm(),
+                "page_obj": page_obj,
             },
         )
 
@@ -46,7 +55,7 @@ class ThreadDetail(View):
         upvotes = False
         if thread.upvotes.filter(id=self.request.user.id).exists():
             upvotes = True
-        downvotes = False
+            downvotes = False
         if thread.downvotes.filter(id=self.request.user.id).exists():
             downvotes = True
 
@@ -62,6 +71,12 @@ class ThreadDetail(View):
             post_form = PostForm()
             messages.error(request, "Posting to the thread failed, contact administrator")
 
+        posts_list = thread.posts.filter(approved=True).order_by('created_on')
+        paginator = Paginator(posts_list, 10)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         return render(
             request, "thread_detail.html",
             {
@@ -70,6 +85,7 @@ class ThreadDetail(View):
                 "post_form": PostForm,
                 "upvotes": upvotes,
                 "downvotes": downvotes,
+                "page_obj": page_obj,
             },
         )
 

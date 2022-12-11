@@ -2,22 +2,15 @@
 
 {% load crispy_forms_tags %}
 
-<div class="masthead">
-    <div class="container">
-        <div class="row g-0">
-            <div class="col-md-6 masthead-text">
-                <!-- Post title goes in these h1 tags -->
-                <h1 class="post-title"> {{ thread.title }}
-                </h1>
-                <!-- Post author goes before the | the post's created date goes after -->
-                <p class="post-subtitle">{{ thread.author }} | {{ thread.created_on }}</p>
-            </div>
-            <div class="d-none d-md-block col-md-6 masthead-image">
 
-            </div>
-        </div>
-    </div>
+<div class="container">
+<div class="col-md-12">
+    <h2>{{ thread.title}} </h2> <i class="fa-solid fa-user"></i> {{thread.author }} <i class="fa-regular fa-clock"></i>
+    {{thread.created_on }}
 </div>
+</div>
+
+
 
 <div class="container">
     <div class="row">
@@ -69,10 +62,10 @@
 
                     </div>
                     <div class="col-1">
-                        {% with post.count as total_posts %}
+                        {% with posts.count as total_posts %}
                         <strong class="text-secondary"><i class="far fa-comments"></i>
                             <!-- Our total_comments variable goes before the closing strong tag -->
-                            {{ total_posts }}
+                            x {{ total_posts }}
                         </strong>
                         {% endwith %}
                     </div>
@@ -86,12 +79,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 card mb-4  mt-3 ">
+        <div class="col-md-12">
             <h3>Comments:</h3>
-            <div class="card-body">
+            <div class="inpost">
                 <!-- We want a for loop inside the tags to iterate through each comment in comments -->
-                {% for post in posts %}
-                <div class="comments" style="padding: 10px;">
+                page number {{ page.number }}
+                {% for post in page_obj %}
+                <div class="col-md-11 comments">
                     <p class="font-weight-bold">
                         <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
                         {{ post.name }}
@@ -106,8 +100,25 @@
                 <!-- Our for loop ends here -->
                 {% endfor %}
             </div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+            
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
         </div>
-        <div class="col-md-4 card mb-4  mt-3 ">
+        <div class="col-md-12">
             <div class="card-body">
                 <!-- For later -->
 
@@ -126,5 +137,7 @@
         </div>
     </div>
 </div>
+
+
 
 {% endblock content %}
