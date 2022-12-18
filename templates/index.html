@@ -14,12 +14,7 @@
                         <i class="fa-solid fa-thumbs-down"></i>
                         {{ thread.number_of_downvotes }}
                         </p>                       
-                        {% with posts.count as total_posts %}
-                        <strong class="text-secondary"><i class="far fa-comments"></i>
-                            <!-- Our total_comments variable goes before the closing strong tag -->
-                            x {{ total_posts }}
-                        </strong>
-                        {% endwith %}
+                       
                     </a>
                 </div>
             </div>
@@ -38,5 +33,9 @@
         {% endif %}
     </ul>
 </nav>
+
+<div>
+    <a href="{% url 'add_thread' %}">new thread</a>
+</div>
 {% endif %}
 {%endblock%}

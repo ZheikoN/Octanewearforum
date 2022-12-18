@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1> add a new thread </h1>
+
+<form action="" method="POST">
+{% csrf_token %}
+
+{{ form.as_p }}
+<button class="btn btn-secondary"> create a new thread </button>
+
+</form>
+
+<p><label>Title <input type="text" id="id__save-title"></label>
+    <p><label>Slug <input type="text" id="id__save-slug"></label>
+
+<script>
+    function slugify(s) {
+  return s
+    .toLowerCase()
+    .replace(/[^-\w\s]/g, "") // remove non-alphanumerics
+    .trim()
+    .replace(/[-\s]+/g, "-") // spaces to hyphens
+    .replace(/-+$/g, ""); // trim trailing hyphens
+}
+
+function slugAutoFill() {
+    var titleInput = document.querySelector('#id__save-title');
+    var slugInput = document.querySelector('#id__save-slug');
+    if (!titleInput) {
+        return;
+    }
+    let slugManuallyEdited = false;
+    slugInput.addEventListener('change', () => {
+        slugManuallyEdited = !!slugInput.value;
+    });
+    function titleEdited() {
+        if (slugManuallyEdited) {
+            return;
+        }
+        slugInput.value = slugify(titleInput.value);
+    }
+    titleInput.addEventListener('change', titleEdited);
+    titleInput.addEventListener('focus', titleEdited);
+    titleInput.addEventListener('keyup', titleEdited);
+}
+slugAutoFill();
+</script>
+{%endblock%}

@@ -14,12 +14,12 @@ class ThreadAdmin(SummernoteModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
-    
+
     summernote_fields = ('body')
     list_filter = ('thread', 'created_on')
     list_display = ('thread', 'name', 'body')
     actions = ['disable_post']
-    
+
     def disable_post(self, request, queryset):
         queryset.update(approved=False)
 
@@ -28,4 +28,3 @@ class PostAdmin(SummernoteModelAdmin):
 class SectionAdmin(admin.ModelAdmin):
 
     list_display = ('title', 'slug')
-

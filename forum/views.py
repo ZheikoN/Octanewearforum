@@ -1,18 +1,20 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
+from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 from .models import Thread
 from .models import Post
 from .forms import PostForm
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.utils.text import slugify
 
 
 class ThreadList(generic.ListView):
     model = Thread
     queryset = Thread.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
-    paginate_by = 6
+    paginate_by = 20
 
 
 class ThreadDetail(View):
@@ -113,3 +115,9 @@ class ThreadDownvote(View):
             messages.warning(request, "You have downvoted this thread")
 
         return HttpResponseRedirect(reverse('thread_detail', args=[slug]))
+
+
+class AddThreadView(CreateView):
+    model = Thread
+    template_name = 'add_thread.html'
+    fields = ('title', 'slug', 'author', 'content')
