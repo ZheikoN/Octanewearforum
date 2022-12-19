@@ -88,6 +88,7 @@ class ThreadDetail(View):
         )
 
 
+
 class ThreadUpvote(View):
 
     def post(self, request, slug, *args, **kwargs):
@@ -134,3 +135,16 @@ class DeleteThreadView(DeleteView):
     model = Thread
     template_name = 'delete_thread.html'
     success_url = reverse_lazy('home')
+
+
+class UpdatePostView(UpdateView):
+    model = Post
+    template_name = 'update_post.html'
+    form_class = PostForm
+
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = 'delete_post.html'
+    success_url = reverse_lazy('home')
+

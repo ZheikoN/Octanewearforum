@@ -48,6 +48,9 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.name} in section {self.thread} on {self.created_on} "
 
+    def get_absolute_url(self):
+        return reverse('home')
+
 
 class Section(models.Model):
     title = models.CharField(max_length=200, unique=True)

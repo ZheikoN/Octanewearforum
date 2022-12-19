@@ -17,10 +17,8 @@ class ThreadForm(forms.ModelForm):
 class UpdateThreadForm(forms.ModelForm):
     class Meta:
         model = Thread
-        fields = ('title', 'slug', 'content')
+        fields = ('content',)
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
