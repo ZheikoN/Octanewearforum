@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% block title %} Update Thread {% endblock %}
+{% block title %} Delete thread {% endblock %}
 {% block content %}
 
 {% if user.is_authenticated %}
-
 <div class="container col-md-6">
     <div class="row">
-        <h1> add a new thread </h1>
+        <h1> Delete Thread </h1>
+        <h2> Delete: {{ thread.title }}</h2>
         <div class="form-group">
 <form action="" method="POST">
 {% csrf_token %}
 
-{{ form.as_p }}
-<button class="btn btn-secondary"> Update thread </button>
+
+<button class="btn btn-danger"> Delete thread </button>
 
 </form>
         </div>

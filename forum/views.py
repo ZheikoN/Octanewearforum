@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from .models import Thread
 from .models import Post
@@ -8,13 +8,14 @@ from .forms import PostForm, ThreadForm, UpdateThreadForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils.text import slugify
+from django.urls import reverse_lazy
 
 
 class ThreadList(generic.ListView):
     model = Thread
     queryset = Thread.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
-    paginate_by = 20
+    paginate_by = 10
 
 
 class ThreadDetail(View):
@@ -127,3 +128,9 @@ class UpdateThreadView(UpdateView):
     model = Thread
     template_name = 'update_thread.html'
     form_class = UpdateThreadForm
+
+
+class DeleteThreadView(DeleteView):
+    model = Thread
+    template_name = 'delete_thread.html'
+    success_url = reverse_lazy('home')

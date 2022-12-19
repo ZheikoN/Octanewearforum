@@ -22,7 +22,8 @@
                         {{ thread.number_of_downvotes }}
                         
                         {% if user.is_authenticated %}
-                        <button class="btn btn-secondary"><a href="{% url 'update_thread' thread.slug %}">edit</a></button>
+                        <button class="btn btn-secondary"><a href="{% url 'update_thread' thread.slug %}">Edit</a></button>
+                        <button class="btn btn-danger"><a href="{% url 'delete_thread' thread.slug %}">Delete</a></button>
                         {% endif %}
                         </p>
                         
