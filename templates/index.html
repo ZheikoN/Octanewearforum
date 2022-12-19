@@ -2,7 +2,14 @@
 
 {% block content %}
 
+    <div class="container col-md-6">
+        <div class="row">
 <div class="container-fluid">
+    {% if user.is_authenticated %}
+    <div>
+        <a href="{% url 'add_thread' %}">new thread</a>
+    </div>
+    {% endif %}
     {% for thread in thread_list %}
             <div class="thread-row">
                 <div class="col-md-12">
@@ -13,13 +20,19 @@
                         <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }} | 
                         <i class="fa-solid fa-thumbs-down"></i>
                         {{ thread.number_of_downvotes }}
-                        </p>                       
+                        
+                        {% if user.is_authenticated %}
+                        <button class="btn btn-secondary"><a href="{% url 'update_thread' thread.slug %}">edit</a></button>
+                        {% endif %}
+                        </p>
+                        
                        
                     </a>
                 </div>
             </div>
     {% endfor %}
-
+</div>
+</div>
 </div>
 {% if is_paginated %}
 <nav aria-label="Page navigation">

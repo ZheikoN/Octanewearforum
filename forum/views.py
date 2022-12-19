@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.http import HttpResponseRedirect
 from .models import Thread
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, ThreadForm, UpdateThreadForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils.text import slugify
@@ -120,4 +120,10 @@ class ThreadDownvote(View):
 class AddThreadView(CreateView):
     model = Thread
     template_name = 'add_thread.html'
-    fields = ('title', 'slug', 'author', 'content')
+    form_class = ThreadForm
+
+
+class UpdateThreadView(UpdateView):
+    model = Thread
+    template_name = 'update_thread.html'
+    form_class = UpdateThreadForm
