@@ -3,6 +3,7 @@
 {% block content %}
 
 {% if user.is_authenticated %}
+{% if user|stringformat:"s" == post.name|stringformat:"s" %}
 <div class="container col-md-6">
     <div class="row">
         <h1> Update Post </h1>
@@ -18,7 +19,12 @@
         </div>
     </div>
 </div>
+{% else %}
 
+<div class="container col-md-6">
+    <h1> You are not supposed to be here! </h1>
+</div>
+{% endif %}
 {% else %}
 
 <div class="container col-md-6">

@@ -5,8 +5,8 @@
 
 <div class="container col-md-6">
     <div class="col-md-12">
-        <h2>{{ thread.title}} </h2> <i class="fa-solid fa-user"></i> {{thread.author }} <i
-            class="fa-regular fa-clock"></i>
+        <h2>{{ thread.title}} </h2> <i class="fa-solid fa-user"></i> {{ thread.author }} {{ thread.author.id }}
+        {{ user.id }}<i class="fa-regular fa-clock"></i>
         {{thread.created_on }}
     </div>
 </div>
@@ -23,7 +23,7 @@
                 <div class="row">
 
                     <div class="col-2">
-                        
+
                         {% if user.is_authenticated %}
                         <strong>
                             <form class="d-inline" action="{% url 'thread_upvote' thread.slug %}" method="POST">
@@ -84,14 +84,20 @@
                 <div class="comments">
                     <p class="font-weight-bold">
                         <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
-                        {{ post.name }} <a href="{% url 'delete_post' post.id %}">Delete post</a><a href="{% url 'update_post' post.id %}">Update post</a>
+                        {{ post.name }} 
+                        {% if user.is_authenticated %}
+                            {% if user|stringformat:"s" == post.name|stringformat:"s" %}
+                                <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete post</a>
+                                <a href="{% url 'update_post' post.id %}" class="btn btn-primary">Update post</a>
+                            {% endif %}
+                        {% endif %}
                         <span class=" text-muted font-weight-normal">
                             <!-- The comment's created date goes here -->
                             {{ post.created_on }}
                         </span> wrote:
                     </p>
                     <!-- The body of the comment goes before the | -->
-                    {{ post.body | safe }} 
+                    {{ post.body | safe }}
                 </div>
                 <!-- Our for loop ends here -->
                 {% endfor %}
