@@ -16,9 +16,6 @@
                 <button class="btn btn-secondary"> create a new thread </button>
 
             </form>
-
-            <p><label>Title <input type="text" id="title"></label>
-                <p><label>Slug <input type="text" id="slug"></label>
         </div>
     </div>
 </div>
@@ -60,6 +57,13 @@
         titleInput.addEventListener('focus', titleEdited);
         titleInput.addEventListener('keyup', titleEdited);
     }
+
+    function authorAutofill() {
+        let name = "{{ user.id }}";
+        document.getElementById("thread-author").value = name;
+    }
     slugAutoFill();
+    authorAutofill();
+    
 </script>
 {%endblock%}
