@@ -4,7 +4,7 @@
 
 <div class="container-sm pb-2">
     <div class="container-lg">
-        <h2 class="card-header m-2">{{ thread.title}} </h2>
+        <h2 class="m-2"> {{ thread.title | slice:":70" }} </h2>
         <i class="fa-solid fa-user"></i><span class="badge rounded-pill bg-secondary">{{ thread.author }}</span>
         <i class="fa-regular fa-clock"></i> {{thread.created_on }}
     </div>

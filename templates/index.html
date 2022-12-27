@@ -13,10 +13,10 @@
                 <li class="list-group-item">
 
                     <a href="{% url 'thread_detail' thread.slug %}" class="post-link">
-                        <h5 class="thread-title">{{ thread.title }}</h5>
+                        <h5 class="thread-title">{{ thread.title | slice:":70"}}</h5>
                         <p class="thread-rest">Posted by <span class="badge rounded-pill bg-secondary">{{ thread.author }}</span>  {{ thread.created_on}}</p>
                     </a>
-                    <p class="badge rounded-pill bg-info text-dark">
+                    <p class="badge rounded-pill bg-info text-dark thread-rest">
                         <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }} |
                         <i class="fa-solid fa-thumbs-down"></i>
                         {{ thread.number_of_downvotes }}
