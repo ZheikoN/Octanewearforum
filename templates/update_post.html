@@ -9,13 +9,13 @@
         <h1> Update Post </h1>
         <h2> Update: {{ post.id }} {{ post.body }}</h2>
         <div class="form-group">
-<form action="" method="POST">
-{% csrf_token %}
+            <form action="" method="POST">
+                {% csrf_token %}
 
-{{ form.as_p }}
-<button class="btn btn-danger"> Delete post </button>
+                {{ form.as_p }}
+                <button class="btn btn-primary"> Update post </button>
 
-</form>
+            </form>
         </div>
     </div>
 </div>

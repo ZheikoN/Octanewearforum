@@ -2,56 +2,51 @@
 
 {% block content %}
 
-    <div class="container col-md-6">
-        <div class="row">
-<div class="container-fluid">
-    {% if user.is_authenticated %}
-    <div>
-        <a href="{% url 'add_thread' %}">new thread</a>
-    </div>
-    {% endif %}
-    {% for thread in thread_list %}
-            <div class="thread-row">
-                <div class="col-md-12">
+<div class="container-sm mt-2">
+    <div class="row">
+        <div class="container-fluid">
+            {% if user.is_authenticated %}
+
+            {% endif %}
+            <ul class="list-group list-group-flush">
+                {% for thread in thread_list %}
+                <li class="list-group-item">
+
                     <a href="{% url 'thread_detail' thread.slug %}" class="post-link">
-                        <p class="thread-title">{{ thread.title }}</p>
-                        <p class="thread-rest">by: {{ thread.author }} {{ thread.created_on}} 
-                        
-                        <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }} | 
+                        <h5 class="thread-title">{{ thread.title }}</h5>
+                        <p class="thread-rest">Posted by <span class="badge rounded-pill bg-secondary">{{ thread.author }}</span>  {{ thread.created_on}}</p>
+                    </a>
+                    <p class="badge rounded-pill bg-info text-dark">
+                        <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }} |
                         <i class="fa-solid fa-thumbs-down"></i>
                         {{ thread.number_of_downvotes }}
-                        
-                        {% if user.is_authenticated %}
-                            {% if user.id == thread.author.id %}
-                        <a href="{% url 'update_thread' thread.slug %}" class="btn btn-primary">Edit</a>
-                        <a href="{% url 'delete_thread' thread.slug %}" class="btn btn-danger">Delete</a>
-                            {% endif%}
-                        {% endif %}
-                        </p>
-                        
-                       
-                    </a>
-                </div>
-            </div>
-    {% endfor %}
-</div>
-</div>
+                    </p>
+                    {% if user.is_authenticated %}
+                    {% if user.id == thread.author.id %}
+                    <a href="{% url 'update_thread' thread.slug %}" class="badge rounded-pill bg-primary">Edit</a>
+                    <a href="{% url 'delete_thread' thread.slug %}" class="badge rounded-pill bg-danger">Delete</a>
+                    {% endif%}
+                    {% endif %}
+
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 {% if is_paginated %}
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
-        <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+        <li><a class="badge bg-secondary m-1" href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
         {% endif %}
+        <span class="badge bg-primary m-1"> Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}</span>
         {% if page_obj.has_next %}
-        <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
-
+        <li><a class="badge bg-secondary m-1" href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
         {% endif %}
     </ul>
 </nav>
 
-<div>
-    <a href="{% url 'add_thread' %}">new thread</a>
-</div>
 {% endif %}
 {%endblock%}

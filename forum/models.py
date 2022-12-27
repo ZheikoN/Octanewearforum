@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 status = ((0, "Draft"), (1, "Published"))
 
@@ -12,7 +13,7 @@ class Thread(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="forum_threads")
     created_on = models.DateTimeField(auto_now=True)
     updated_on = models.DateTimeField(auto_now=True)
-    content = models.TextField()
+    content = RichTextField(blank=True, null=True)
     excerpt = models.TextField(blank=True)
     status = models.IntegerField(choices=status, default=1)
     upvotes = models.ManyToManyField(User, related_name='thread_upvotes', blank=True)
@@ -38,7 +39,7 @@ class Post(models.Model):
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name="posts")
     name = models.CharField(max_length=50)
     email = models.EmailField()
-    body = models.TextField()
+    body = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now=True)
     approved = models.BooleanField(default=True)
 
@@ -50,15 +51,3 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
-
-
-class Section(models.Model):
-    title = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(max_length=200, unique=True)
-    threads = models.ManyToManyField(Thread, related_name='threads', blank=False)
-
-    class Meta:
-        ordering = ['title']
-
-    def __str__(self):
-        return f"Section: {self.title} contains {self.threads}"

@@ -2,8 +2,7 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
-from .models import Thread
-from .models import Post
+from .models import Thread, Post
 from .forms import PostForm, ThreadForm, UpdateThreadForm
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -31,6 +30,7 @@ class ThreadDetail(View):
         upvotes = False
         if thread.upvotes.filter(id=self.request.user.id).exists():
             upvotes = True
+
         downvotes = False
         if thread.downvotes.filter(id=self.request.user.id).exists():
             downvotes = True
@@ -55,6 +55,7 @@ class ThreadDetail(View):
         upvotes = False
         if thread.upvotes.filter(id=self.request.user.id).exists():
             upvotes = True
+
         downvotes = False
         if thread.downvotes.filter(id=self.request.user.id).exists():
             downvotes = True
@@ -69,7 +70,7 @@ class ThreadDetail(View):
             messages.success(request, "Your post was successful")
         else:
             post_form = PostForm()
-            messages.error(request, "Posting to the thread failed, contact administrator")
+            messages.error(request, "Posting to the thread failed")
 
         paginator = Paginator(posts, 10)
         page_number = request.GET.get('page', 999)
@@ -88,7 +89,6 @@ class ThreadDetail(View):
         )
 
 
-
 class ThreadUpvote(View):
 
     def post(self, request, slug, *args, **kwargs):
@@ -96,10 +96,10 @@ class ThreadUpvote(View):
 
         if thread.upvotes.filter(id=request.user.id).exists():
             thread.upvotes.remove(request.user)
-            messages.warning(request, "Your upvote was removed successfully")
+            messages.warning(request, "Your upvote was removed")
         else:
             thread.upvotes.add(request.user)
-            messages.success(request, "Your have upvoted this thread successfully")
+            messages.success(request, "You have upvoted this thread")
 
         return HttpResponseRedirect(reverse('thread_detail', args=[slug]))
 
@@ -111,7 +111,7 @@ class ThreadDownvote(View):
 
         if thread.downvotes.filter(id=request.user.id).exists():
             thread.downvotes.remove(request.user)
-            messages.success(request, "Your downvote was removed successfully")
+            messages.success(request, "Your downvote was removed")
         else:
             thread.downvotes.add(request.user)
             messages.warning(request, "You have downvoted this thread")
@@ -147,4 +147,3 @@ class DeletePostView(DeleteView):
     model = Post
     template_name = 'delete_post.html'
     success_url = reverse_lazy('home')
-

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Thread, Section
+from .models import Post, Thread
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -22,9 +22,3 @@ class PostAdmin(SummernoteModelAdmin):
 
     def disable_post(self, request, queryset):
         queryset.update(approved=False)
-
-
-@admin.register(Section)
-class SectionAdmin(admin.ModelAdmin):
-
-    list_display = ('title', 'slug')

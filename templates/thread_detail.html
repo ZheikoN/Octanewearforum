@@ -2,142 +2,149 @@
 
 {% load crispy_forms_tags %}
 
-
-<div class="container col-md-6">
-    <div class="col-md-12">
-        <h2>{{ thread.title}} </h2> <i class="fa-solid fa-user"></i> {{ thread.author }} 
-        <i class="fa-regular fa-clock"></i>
-        {{thread.created_on }}
+<div class="container-sm pb-2">
+    <div class="container-lg">
+        <h2>{{ thread.title}} </h2>
+        <i class="fa-solid fa-user"></i><span class="badge rounded-pill bg-secondary">{{ thread.author }}</span>
+        <i class="fa-regular fa-clock"></i> {{thread.created_on }}
     </div>
 </div>
 
-
-
-<div class="container col-md-6">
+<div class="container-sm pb-2">
     <div class="row">
-        <div class="col card mb-4  mt-3 left  top">
-            <div class="card-body">
-                <!-- The post content goes inside the card-text. -->
-                <!-- Use the | safe filter inside the template tags -->
-                <p class="card-text "> {{ thread.content | safe }}</p>
-                <div class="row">
+        <div class="col-md-12">
+            <div class="card container-fluid" style="width: 100%;">
 
-                    <div class="col-2">
+                <ul class="list-group list-group-flush">
+                    <p class="card-text "> {{ thread.content | safe }}</p>
+                </ul>
 
-                        {% if user.is_authenticated %}
-                        <strong>
-                            <form class="d-inline" action="{% url 'thread_upvote' thread.slug %}" method="POST">
-                                {% csrf_token %}
-                                {% if upvotes %}
-                                <button type="submit" name="forumthread_id" value="{{thread.slug}}" class="btn-like">
-                                    <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }}
-                                </button>
-                                {% else %}
-                                <button type="submit" name="forumthread_id" value="{{thread.slug}}" class="btn-like">
-                                    <i class="fa-regular fa-thumbs-up"></i> {{ thread.number_of_upvotes }}
-                                </button>
-                                {% endif %}
-                            </form>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            {% if user.is_authenticated %}
+                            <strong>
+                                <form class="d-inline" action="{% url 'thread_upvote' thread.slug %}" method="POST">
+                                    {% csrf_token %}
+                                    {% if upvotes %}
+                                    <button type="submit" name="forumthread_id" value="{{thread.slug}}"
+                                        class="btn-like">
+                                        <i class="fa-solid fa-thumbs-up"></i> {{ thread.number_of_upvotes }}
+                                    </button>
+                                    {% else %}
+                                    <button type="submit" name="forumthread_id" value="{{thread.slug}}"
+                                        class="btn-like">
+                                        <i class="fa-regular fa-thumbs-up"></i> {{ thread.number_of_upvotes }}
+                                    </button>
+                                    {% endif %}
+                                </form>
 
-                            <form class="d-inline" action="{% url 'thread_downvote' thread.slug %}" method="POST">
-                                {% csrf_token %}
-                                {% if downvotes %}
-                                <button type="submit" name="forumthread_id" value="{{thread.slug}}" class="btn-like">
-                                    <i class="fa-solid fa-thumbs-down"></i> {{ thread.number_of_downvotes }}
-                                </button>
-                                {% else %}
-                                <button type="submit" name="forumthread_id" value="{{thread.slug}}" class="btn-like">
-                                    <i class="fa-regular fa-thumbs-down"></i> {{ thread.number_of_downvotes }}
-                                </button>
-                                {% endif %}
+                                <form class="d-inline" action="{% url 'thread_downvote' thread.slug %}" method="POST">
+                                    {% csrf_token %}
+                                    {% if downvotes %}
+                                    <button type="submit" name="forumthread_id" value="{{thread.slug}}"
+                                        class="btn-like">
+                                        <i class="fa-solid fa-thumbs-down"></i> {{ thread.number_of_downvotes }}
+                                    </button>
+                                    {% else %}
+                                    <button type="submit" name="forumthread_id" value="{{thread.slug}}"
+                                        class="btn-like">
+                                        <i class="fa-regular fa-thumbs-down"></i> {{ thread.number_of_downvotes }}
+                                    </button>
+                                    {% endif %}
 
-                            </form>
-                        </strong>
-                        {% else %}
+                                </form>
+                            </strong>
+                            {% else %}
 
-                        <p>you need to be logged in to rate this thread</p>
-                        <strong class="text-secondary"><i class="fa-solid fa-thumbs-up"></i>
-                            {{ thread.number_of_upvotes }} | <i class="fa-solid fa-thumbs-down"></i>
-                            {{ thread.number_of_downvotes }}</strong>
+                            <strong class="text-secondary">
+                                <i class="fa-solid fa-thumbs-up"></i>
+                                {{ thread.number_of_upvotes }} |
+                                <i class="fa-solid fa-thumbs-down"></i>
+                                {{ thread.number_of_downvotes }}
+                            </strong>
 
-                        {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="col-sm">
+                            {% with posts.count as total_posts %}
+                            <strong class="text-secondary"><i class="far fa-comments"></i>
 
-                    </div>
-                    <div class="col-1">
-                        {% with posts.count as total_posts %}
-                        <strong class="text-secondary"><i class="far fa-comments"></i>
-                            <!-- Our total_comments variable goes before the closing strong tag -->
-                            x {{ total_posts }}
-                        </strong>
-                        {% endwith %}
+                                x {{ total_posts }}
+                            </strong>
+                            {% endwith %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="container-sm">
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12 inpost">
-                <!-- We want a for loop inside the tags to iterate through each comment in comments -->
-                page number {{ page_obj.number }}
-                {% for post in page_obj %}
-                <div class="comments">
-                    <p class="font-weight-bold">
-                        <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
-                        {{ post.name }} 
-                        {% if user.is_authenticated %}
+            <div class="card container-fluid" style="width: 100%;">
+                <ul class="list-group list-group-flush">
+                    {% for post in page_obj %}
+                    <li class="list-group-item">
+                        <p class="font-weight-bold">
+
+                            <p class="badge rounded-pill bg-secondary">{{ post.name }}</p><span
+                                class="text-muted font-weight-normal m-2">{{ post.created_on }}</span>
+                            {% if user.is_authenticated %}
                             {% if user|stringformat:"s" == post.name|stringformat:"s" %}
-                                <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete post</a>
-                                <a href="{% url 'update_post' post.id %}" class="btn btn-primary">Update post</a>
+                            <a href="{% url 'update_post' post.id %}" class="badge rounded-pill bg-primary">Update
+                                post</a>
+                            <a href="{% url 'delete_post' post.id %}" class="badge rounded-pill bg-danger">Delete
+                                post</a>
                             {% endif %}
-                        {% endif %}
-                        <span class=" text-muted font-weight-normal">
-                            <!-- The comment's created date goes here -->
-                            {{ post.created_on }}
-                        </span> wrote:
-                    </p>
-                    <!-- The body of the comment goes before the | -->
-                    {{ post.body | safe }}
-                </div>
-                <!-- Our for loop ends here -->
-                {% endfor %}
+                            {% endif %}
+
+                        </p>
+
+                        {{ post.body | safe }}
+
+                    </li>
+                    {% endfor %}
             </div>
-            <div class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                    {% endif %}
+            <nav class="nav justify-content-center">
 
-                    <span class="current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-
-                    {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                    {% endif %}
-                </span>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="card-body">
-                <!-- For later -->
-
-                {% if user.is_authenticated %}
-
-                <h3>reply:</h3>
-                <p>{{ user.username }}</p>
-                <form method="post" style="margin-top: 1.3em">
-                    {{ post_form | crispy }}
-                    {% csrf_token %}
-                    <button type="submit">submit</button>
-                </form>
+                {% if page_obj.has_previous %}
+                <a class="badge bg-secondary m-1" href="?page=1">&laquo; first</a>
+                <a class="badge bg-secondary m-1" href="?page={{ page_obj.previous_page_number }}">previous</a>
                 {% endif %}
 
-            </div>
+
+                <span class="badge bg-primary m-1"> Page {{ page_obj.number }} of
+                    {{ page_obj.paginator.num_pages }}</span>
+
+
+                {% if page_obj.has_next %}
+                <a class="badge bg-secondary m-1" href="?page={{ page_obj.next_page_number }}">next</a>
+                <a class="badge bg-secondary m-1" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+
+            </nav>
+        </div>
+        {% if user.is_authenticated %}
+
+        <p>
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample">
+                Reply:
+            </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <form method="post" style="margin-top: 1.3em">
+                {{ post_form | crispy }}
+                {% csrf_token %}
+                <button class="btn btn-primary mt-2" type="submit">submit</button>
+            </form>
         </div>
     </div>
+
+    {% endif %}
+</div>
 </div>
 
 {% endblock content %}
