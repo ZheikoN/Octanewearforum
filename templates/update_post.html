@@ -4,16 +4,16 @@
 
 {% if user.is_authenticated %}
 {% if user|stringformat:"s" == post.name|stringformat:"s" %}
-<div class="container col-md-6">
+<div class="container-sm">
     <div class="row">
-        <h1> Update Post </h1>
-        <h2> Update: {{ post.id }} {{ post.body }}</h2>
+        <h5 class="card-header m-2"> Update Post </h5>
+        <p> You are now updating this post:<br/> <span class="badge bg-danger">{{ post.body }}</span></p>
         <div class="form-group">
-            <form action="" method="POST">
+            <form class="edit-thread" method="POST">
                 {% csrf_token %}
 
-                {{ form.as_p }}
-                <button class="btn btn-primary"> Update post </button>
+                {{ form }}
+                <button class="btn btn-primary offset-md-8"> Update post </button>
 
             </form>
         </div>

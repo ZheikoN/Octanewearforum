@@ -4,16 +4,16 @@
 
 {% if user.is_authenticated %}
     
-<div class="container col-md-6">
+<div class="container-sm pb-2">
     <div class="row">
-        <h1> add a new thread </h1>
-        <div class="form-group">
+        <h5 class="card-header"> Add a new thread </h5>
+        <div class="container-sm">
             
             <form action="" method="POST">
                 {% csrf_token %}
                 {{ form.media }}
                 {{ form.as_p }}
-                <button class="btn btn-secondary"> create a new thread </button>
+                <button class="btn btn-secondary offset-md-8"> Create a new thread </button>
 
             </form>
         </div>

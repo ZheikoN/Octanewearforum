@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-{% block title %} Delete thread {% endblock %}
+{% block title %} Delete post {% endblock %}
 {% block content %}
 
 {% if user.is_authenticated %}
 {% if user|stringformat:"s" == post.name|stringformat:"s" %}
-<div class="container col-md-6">
+<div class="container-sm">
     <div class="row">
-        <h1> Delete Thread </h1>
-        <h2> Delete: {{ post.id }} {{ post.body }}</h2>
+        <h5 class="card-header m-2"> Delete Post </h5>
+        <p> Are you sure you want to delete this post: <br/><span class="badge bg-danger">{{ post.body }}</span></p>
         <div class="form-group">
-<form action="" method="POST">
-{% csrf_token %}
+            <form method="POST">
+                {% csrf_token %}
 
 
-<button class="btn btn-danger"> Delete post </button>
+                <button class="btn btn-danger offset-md-8"> Delete post </button>
 
-</form>
+            </form>
         </div>
     </div>
 </div>

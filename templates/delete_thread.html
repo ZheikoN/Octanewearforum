@@ -4,19 +4,18 @@
 
 {% if user.is_authenticated %}
 {% if user.id == thread.author.id %}
-<div class="container col-md-6">
+<div class="container-sm">
     <div class="row">
-        <h1> Delete Thread </h1>
-        <h2> Delete: {{ thread.title }}</h2>
-        <div class="form-group">
-<form action="" method="POST">
-{% csrf_token %}
+        <h5 class="card-header m-2"> Delete Thread </h5>
+            <p>Are you sure you want to delete <span class="badge bg-danger">{{ thread.title }}</span></p>
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
 
+                    <button class="btn btn-danger offset-md-8"> Delete thread </button>
 
-<button class="btn btn-danger"> Delete thread </button>
-
-</form>
-        </div>
+                </form>
+            </div>
     </div>
 </div>
 {% else %}
