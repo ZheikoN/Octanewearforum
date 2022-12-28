@@ -13,7 +13,8 @@
       <div class="card">
         <h5 class="card-header">{% trans "Sign Up" %}</h5>
         <div class="card-body">
-          <p class="card-text">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+          <p class="card-text">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign
+              in</a>.{% endblocktrans %}</p>
           <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
             {{ form.as_p }}
@@ -24,15 +25,6 @@
           </form>
         </div>
       </div>
-      <h1></h1>
-
-      <p>
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8 mt-3 offset-md-2">
-      
     </div>
   </div>
 </div>

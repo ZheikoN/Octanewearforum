@@ -19,21 +19,16 @@
         <div class="card-body">
           <h5 class="card-title">{% trans 'Are you sure you want to sign out?' %}</h5>
           <p class="card-text">
-          <form method="post" action="{% url 'account_logout' %}">
-            {% csrf_token %}
-            {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-            {% endif %}
-            <button type="submit" class="btn btn-outline-danger btn-lg offset-md-8">{% trans 'Sign Out' %}</button>
-          </form>
-        </p>
+            <form method="post" action="{% url 'account_logout' %}">
+              {% csrf_token %}
+              {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+              <button type="submit" class="btn btn-outline-danger btn-lg offset-md-8">{% trans 'Sign Out' %}</button>
+            </form>
+          </p>
         </div>
       </div>
-
-      
-      
-
-      
     </div>
   </div>
 </div>

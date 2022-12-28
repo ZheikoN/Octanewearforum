@@ -7,15 +7,15 @@
 <div class="container-sm">
     <div class="row">
         <h5 class="card-header m-2"> Delete Thread </h5>
-            <p>Are you sure you want to delete <span class="badge bg-danger">{{ thread.title }}</span></p>
-            <div class="form-group">
-                <form method="POST">
-                    {% csrf_token %}
+        <p>Are you sure you want to delete <span class="badge bg-danger">{{ thread.title }}</span></p>
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
 
-                    <button class="btn btn-danger offset-md-8"> Delete thread </button>
+                <button class="btn btn-danger offset-md-8"> Delete thread </button>
 
-                </form>
-            </div>
+            </form>
+        </div>
     </div>
 </div>
 {% else %}

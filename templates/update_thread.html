@@ -3,20 +3,21 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-    {% if user.id == thread.author.id %}
+{% if user.id == thread.author.id %}
 <div class="container-sm mt-2">
     <div class="row">
         <h5 class="card-header"> You are now editing {{ thread.title }} </h1>
-        <div class="form-group">
-<form class="edit-thread" method="POST">
-{% csrf_token %}
-{{ form.media }}
-{{ form.as_p }}
-<button class="btn btn-secondary offset-md-8"> Update thread </button> <a href="{% url 'delete_thread' thread.slug %}" class="btn btn-danger">Delete</a>
-</form>
+            <div class="form-group">
+                <form class="edit-thread" method="POST">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary offset-md-8"> Update thread </button> <a
+                        href="{% url 'delete_thread' thread.slug %}" class="btn btn-danger">Delete</a>
+                </form>
 
 
-        </div>
+            </div>
     </div>
 </div>
 {% else %}

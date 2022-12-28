@@ -6,7 +6,8 @@
 <head>
     <title>Octane Wear Forums</title>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -25,7 +26,8 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid">
-            <a href="{% url 'home' %}"><img class="logo" src="{% static 'img/octanewear.jpg' %}" alt="Octanewearlogo"></a>
+            <a href="{% url 'home' %}"><img class="logo" src="{% static 'img/octanewear.jpg' %}"
+                    alt="Octanewearlogo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -60,12 +62,12 @@
             <div class="col-md-8 offset-md-2">
 
                 {% for message in messages%}
-                    <div class="alert {{ message.tags }} alert-dismissable fade show" id="msg" role="alert">
-                        {{ message | safe }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
+                <div class="alert {{ message.tags }} alert-dismissable fade show" id="msg" role="alert">
+                    {{ message | safe }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
 
-                        </button>
-                    </div>
+                    </button>
+                </div>
 
                 {% endfor %}
             </div>
@@ -96,7 +98,7 @@
     </footer>
 
     <script>
-        setTimeout(function() {
+        setTimeout(function () {
             let messages = document.getElementById("msg");
             let alert = new bootstrap.Alert(messages);
             alert.close();

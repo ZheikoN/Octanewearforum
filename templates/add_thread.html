@@ -3,12 +3,12 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-    
+
 <div class="container-sm pb-2">
     <div class="row">
         <h5 class="card-header"> Add a new thread </h5>
         <div class="container-sm">
-            
+
             <form action="" method="POST">
                 {% csrf_token %}
                 {{ form.media }}
@@ -64,6 +64,5 @@
     }
     slugAutoFill();
     authorAutofill();
-    
 </script>
 {%endblock%}

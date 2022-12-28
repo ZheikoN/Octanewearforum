@@ -4,7 +4,7 @@
 
 <div class="container-sm pb-2">
     <div class="container-lg">
-        <h2 class="m-2"> {{ thread.title | slice:":70" }} </h2>
+        <h2 class="m-2"> {{ thread.title }} </h2>
         <i class="fa-solid fa-user"></i><span class="badge rounded-pill bg-secondary">{{ thread.author }}</span>
         <i class="fa-regular fa-clock"></i> {{thread.created_on }}
     </div>
@@ -16,9 +16,10 @@
             <div class="card container-fluid" style="width: 100%;">
 
                 <ul class="list-group list-group-flush">
-                    <p class="card-text "> {{ thread.content | safe }}</p>
+                    <li class="list-group-item">
+                        <div class="card-text"> {{ thread.content | safe }}</div>
+                    </li>
                 </ul>
-
                 <div class="container">
                     <div class="row">
                         <div class="col-sm">
@@ -87,7 +88,7 @@
                 <ul class="list-group list-group-flush">
                     {% for post in page_obj %}
                     <li class="list-group-item">
-                        <p class="font-weight-bold">
+                        <div class="font-weight-bold">
 
                             <p class="badge rounded-pill bg-secondary">{{ post.name }}</p><span
                                 class="text-muted font-weight-normal m-2">{{ post.created_on }}</span>
@@ -100,12 +101,13 @@
                             {% endif %}
                             {% endif %}
 
-                        </p>
+                        </div>
 
                         {{ post.body | safe }}
 
                     </li>
                     {% endfor %}
+                </ul>
             </div>
             <nav class="nav justify-content-center">
 
