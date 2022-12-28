@@ -7,9 +7,14 @@ class ThreadForm(forms.ModelForm):
         model = Thread
         fields = ('title', 'slug', 'author', 'content')
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'id': 'title'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control', 'id': 'slug', 'type': 'hidden'}),
-            'author': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'thread-author', 'type': 'hidden'}),
+            'title': forms.TextInput(attrs={'class': 'form-control',
+                                            'id': 'title'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control',
+                                           'id': 'slug', 'type': 'hidden'}),
+            'author': forms.TextInput(attrs={'class': 'form-control',
+                                             'value': '',
+                                             'id': 'thread-author',
+                                             'type': 'hidden'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
