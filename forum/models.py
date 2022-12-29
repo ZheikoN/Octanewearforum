@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.urls import reverse
-from ckeditor.fields import RichTextField
 
 status = ((0, "Draft"), (1, "Published"))
 
@@ -14,7 +13,7 @@ class Thread(models.Model):
                                related_name="forum_threads")
     created_on = models.DateTimeField(auto_now=True)
     updated_on = models.DateTimeField(auto_now=True)
-    content = RichTextField(blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
     excerpt = models.TextField(blank=True)
     status = models.IntegerField(choices=status, default=1)
     upvotes = models.ManyToManyField(User, related_name='thread_upvotes',

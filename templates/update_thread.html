@@ -10,7 +10,6 @@
             <div class="form-group">
                 <form class="edit-thread" method="POST">
                     {% csrf_token %}
-                    {{ form.media }}
                     {{ form.as_p }}
                     <button class="btn btn-secondary offset-md-8"> Update thread </button> <a
                         href="{% url 'delete_thread' thread.slug %}" class="btn btn-danger">Delete</a>
