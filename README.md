@@ -205,7 +205,7 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
 ### Known Bugs
 
 - Upvote and Downvote can be casted by single user
-- CKeditor used for more advanced formatting does not appear to be mobile friendly
+- ~~CKeditor used for more advanced formatting does not appear to be mobile friendly~~ - CKeditor completelly removed
 
 
 ---
@@ -218,6 +218,8 @@ The W3C Markup Validator and W3C CSS Validator Services were used to validate ev
   - this was resolved by having Django insert posts and threads into divs instead of paragraphs
 - **Single long word could break the design of website (deliberate damage testing)**
   - fixed by adjusting word wrapping in style.css
+- **Upon deployment Django-CKeditor component did not load**
+  - decided to temporarily use non-rich text editor to create new posts
 
 ---
 * [Go back to top](#table-of-contents)
